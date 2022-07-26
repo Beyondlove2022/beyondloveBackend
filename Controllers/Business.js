@@ -349,7 +349,7 @@ export const uploadPhoto = async (req, res) => {
       return res.json({
         success: true,
         msg: "Photos Uploaded Successfully",
-        bussinessImages,
+        businessImages,
       });
     } else {
       return res.json({ success: false, msg: "This category not available" });
