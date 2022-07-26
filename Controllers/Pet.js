@@ -31,6 +31,13 @@ export const createPetProfile = async (req, res) => {
       customerId,
     });
     await pet.save();
+    const petDetails = await Pet.findById(pet.id);
+    console.log(petDetails);
+    return res.json({
+      success: true,
+      msg: "Pet Details Created Successfully",
+      petDetails,
+    });
   } catch (error) {
     console.log(error);
     return res.json({ success: false, msg: "Something went wrong" });
