@@ -17,7 +17,7 @@ const petGroomingSchema = new Schema({
   mapLocation: { type: Array },
   verified: { type: Boolean, default: false },
   trending: { type: Boolean, default: false },
-  images: { type: Array },
+  images: { type: Array, default: [] },
   coverImage: { type: String },
   profileImage: { type: String },
   likes: { type: Array },

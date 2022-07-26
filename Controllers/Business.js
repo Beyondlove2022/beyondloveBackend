@@ -300,16 +300,18 @@ export const uploadPhoto = async (req, res) => {
   const file = req.files;
   const { bussinessId, category, folderName } = req.params;
   try {
+    console.log(category, "cate");
     let categoryName;
-    if (category == "PetClinic") {
+    if (category == "petclinic") {
+      console.log("comes");
       categoryName = PetClinic;
-    } else if (category == "PetBoarding") {
+    } else if (category == "petboarding") {
       categoryName = PetBoarding;
-    } else if (category == "PetGrooming") {
+    } else if (category == "petgrooming") {
       categoryName = PetGrooming;
-    } else if (category == "PetTraining") {
+    } else if (category == "pettraining") {
       categoryName = PetTraining;
-    } else if (category == "PetFood") {
+    } else if (category == "petfood") {
       categoryName = PetFood;
     } else {
       return res.json({ success: false, msg: "This category not available" });
@@ -323,7 +325,7 @@ export const uploadPhoto = async (req, res) => {
       );
       return res.json({
         success: true,
-        msg: "Cover Photo Uploaded Successfully",
+        msg: "Profile Photo Uploaded Successfully",
         bussinessProfileImage: bussiness.profileImage,
       });
     } else if (folderName === "cover") {
@@ -335,6 +337,19 @@ export const uploadPhoto = async (req, res) => {
         success: true,
         msg: "Cover Photo Uploaded Successfully",
         bussinessCoverImage: bussiness.coverImage,
+      });
+    } else if (folderName === "allphotos") {
+      const business = await categoryName.findById(bussinessId);
+      const businessImages = business.images;
+      businessImages.push(image);
+      await categoryName.findByIdAndUpdate(
+        { _id: bussinessId },
+        { images: businessImages }
+      );
+      return res.json({
+        success: true,
+        msg: "Photos Uploaded Successfully",
+        bussinessImages,
       });
     } else {
       return res.json({ success: false, msg: "This category not available" });
