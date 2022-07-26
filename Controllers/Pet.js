@@ -61,3 +61,5 @@ export const getAllPetProfile = async (req, res) => {
     return res.json({ success: false, msg: "Something went wrong" });
   }
 };
+
+export const petProfile = () => {};
