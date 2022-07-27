@@ -386,5 +386,3 @@ export const getPhoto = async (req, res) => {
     });
   }
 };
-
-export const profile
