@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const petClinicSchema = new Schema({
   businessName: { type: String },
+  category: { type: String, default: "PetClinic" },
   email: { type: String },
   mobile: { type: String },
   password: { type: String },
@@ -19,8 +20,8 @@ const petClinicSchema = new Schema({
   verified: { type: Boolean, default: false },
   trending: { type: Boolean, default: false },
   images: { type: Array, default: [] },
-  coverImage: { type: String },
-  profileImage: { type: String },
+  coverImage: { type: String, default: "common/cover/clinic.jpg" },
+  profileImage: { type: String, default: "common/profile/clinic.jpg" },
   likes: { type: Array },
   facebookUrl: { type: String },
   instagramUrl: { type: String },

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const petFoodSchema = new Schema({
   businessName: { type: String },
+  category: { type: String, default: "PetFood" },
   email: { type: String },
   mobile: { type: String },
   password: { type: String },
@@ -19,8 +20,8 @@ const petFoodSchema = new Schema({
   verified: { type: Boolean, default: false },
   trending: { type: Boolean, default: false },
   images: { type: Array, default: [] },
-  coverImage: { type: String },
-  profileImage: { type: String },
+  coverImage: { type: String, default: "common/cover/food.jpg" },
+  profileImage: { type: String, default: "common/profile/food.jpg" },
   likes: { type: Array },
   veg: { type: Boolean },
   nonVeg: { type: Boolean },

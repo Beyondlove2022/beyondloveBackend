@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const petBoardingSchema = new Schema({
   businessName: { type: String },
+  category: { type: String, default: "PetBoarding" },
   email: { type: String },
   mobile: { type: String },
   password: { type: String },
@@ -18,8 +19,8 @@ const petBoardingSchema = new Schema({
   verified: { type: Boolean, default: false },
   trending: { type: Boolean, default: false },
   images: { type: Array, default: [] },
-  coverImage: { type: String },
-  profileImage: { type: String },
+  coverImage: { type: String, default: "common/cover/boarding.jpg" },
+  profileImage: { type: String, default: "common/profile/boarding.jpg" },
   likes: { type: Array },
   facilities: { type: Array },
   facebookUrl: { type: String },

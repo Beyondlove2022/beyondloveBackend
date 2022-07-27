@@ -302,16 +302,16 @@ export const uploadPhoto = async (req, res) => {
   try {
     console.log(category, "cate");
     let categoryName;
-    if (category == "petclinic") {
+    if (category == "PetClinic") {
       console.log("comes");
       categoryName = PetClinic;
-    } else if (category == "petboarding") {
+    } else if (category == "PetBoarding") {
       categoryName = PetBoarding;
-    } else if (category == "petgrooming") {
+    } else if (category == "PetGrooming") {
       categoryName = PetGrooming;
-    } else if (category == "pettraining") {
+    } else if (category == "PetTraining") {
       categoryName = PetTraining;
-    } else if (category == "petfood") {
+    } else if (category == "PetFood") {
       categoryName = PetFood;
     } else {
       return res.json({ success: false, msg: "This category not available" });
@@ -329,10 +329,11 @@ export const uploadPhoto = async (req, res) => {
         bussinessProfileImage: bussiness.profileImage,
       });
     } else if (folderName === "cover") {
-      const bussiness = await categoryName.findByIdAndUpdate(
+      await categoryName.findByIdAndUpdate(
         { _id: bussinessId },
         { coverImage: image }
       );
+      const bussiness = await categoryName.findById(bussinessId);
       return res.json({
         success: true,
         msg: "Cover Photo Uploaded Successfully",
