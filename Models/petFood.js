@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const petFoodSchema = new Schema(
   {
     businessName: { type: String },
+    userType: { type: String, default: "Business" },
     category: { type: String, default: "PetFood" },
     email: { type: String },
     mobile: { type: String },

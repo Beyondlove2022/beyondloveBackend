@@ -73,3 +73,18 @@ export const customerLogin = async (req, res) => {
     return res.json({ success: false, msg: "something went wrong" });
   }
 };
+
+export const updateCustomerProfile = async (req, res) => {
+  const id = req.user.id;
+  try {
+    const cuntomer = await Customer.findById(id);
+    if (!customer) {
+      return res.json({ success: false, msg: "Customer Profile not found" });
+    }
+    await Customer.findByIdAndUpdate({ _id: id }, { $set: req.body });
+    const customerDetails = await Customer.findById(id);
+    return res.json({ success: true, customerDetails, msg: "Profile Updated" });
+  } catch (error) {
+    return res.json({ success: false, msg: "Something went wrong", error });
+  }
+};
