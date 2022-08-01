@@ -16,6 +16,6 @@ route.put(
   customerAuthentication,
   updateCustomerProfile
 );
-route.get("/customer/get-profile", getCustomerProfile);
+route.get("/customer/get-profile/:id", getCustomerProfile);
 
 export default route;
