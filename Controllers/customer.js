@@ -77,7 +77,7 @@ export const customerLogin = async (req, res) => {
 export const updateCustomerProfile = async (req, res) => {
   const id = req.user.id;
   try {
-    const cuntomer = await Customer.findById(id);
+    const customer = await Customer.findById(id);
     if (!customer) {
       return res.json({ success: false, msg: "Customer Profile not found" });
     }
