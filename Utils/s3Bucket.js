@@ -37,7 +37,7 @@ export const downloadFile = async (bussinessId, folderName, fileName) => {
 export const uploadfile = async (file, bussinessId, folderName) => {
   try {
     // const picArray = [];
-    // console.log(file);
+    console.log(file);
     if (folderName === "all") {
       const result = await sharp(file[0].path)
         .resize({ width: 800, height: 400, fit: "fill" })
