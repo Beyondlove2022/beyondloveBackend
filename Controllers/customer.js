@@ -4,7 +4,7 @@ import { generateToken } from "../Utils/jwtToken.js";
 import Customer from "../Models/customer/account.js";
 
 export const customerRegister = async (req, res) => {
-  let { mobile, email, password, name } = req.body;
+  let { mobile, email, password, customerName } = req.body;
   console.log(req.body);
   try {
     let findEmail = await Customer.findOne({ email });
@@ -29,7 +29,7 @@ export const customerRegister = async (req, res) => {
     password = await bcrypt.hash(password, salt);
 
     let customer = await new Customer({
-      name,
+      customerName,
       password,
       mobile,
       email,
