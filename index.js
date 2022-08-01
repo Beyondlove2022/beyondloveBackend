@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ extended: true }));
 app.use("/api", Business);
 app.use("/api", Customer);
-app.use("api", Pet);
+app.use("/api", Pet);
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}, on ${process.env.NODE_ENV} mode`);
