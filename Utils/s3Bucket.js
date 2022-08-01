@@ -54,9 +54,11 @@ export const uploadfile = async (file, bussinessId, folderName) => {
       Body: fileStream,
       Key: `${bussinessId}/${folderName}/${file[0].originalname}`,
     };
+    const S3 = await s3.upload(uploadParams).promise();
     fs.unlinkSync(file[0].originalname);
     fs.unlinkSync(`uploads/${file[0].originalname}`);
-    return await s3.upload(uploadParams).promise();
+    console.log("s3 Working");
+    return S3;
   } catch (error) {
     console.log(error);
     return res.json({

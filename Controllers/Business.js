@@ -300,7 +300,7 @@ export const uploadPhoto = async (req, res) => {
   const file = req.files;
   const { bussinessId, category, folderName } = req.params;
   try {
-    console.log(category, "cate");
+    console.log(req.params, "cate");
     let categoryName;
     if (category == "PetClinic") {
       console.log("comes");
@@ -317,16 +317,20 @@ export const uploadPhoto = async (req, res) => {
       return res.json({ success: false, msg: "This category not available" });
     }
     const result = await uploadfile(file, bussinessId, folderName);
+    console.log("result Start", result, "result");
     const image = result.Key;
+    console.log("object");
     if (folderName === "profile") {
-      const bussiness = await categoryName.findByIdAndUpdate(
+      console.log("working");
+      await categoryName.findByIdAndUpdate(
         { _id: bussinessId },
         { profileImage: image }
       );
+      const profileImg = await categoryName.findById(bussinessId);
       return res.json({
         success: true,
         msg: "Profile Photo Uploaded Successfully",
-        bussinessProfileImage: bussiness.profileImage,
+        bussinessProfileImage: profileImg,
       });
     } else if (folderName === "cover") {
       await categoryName.findByIdAndUpdate(
@@ -347,6 +351,7 @@ export const uploadPhoto = async (req, res) => {
         { _id: bussinessId },
         { images: businessImages }
       );
+      // let img = await
       return res.json({
         success: true,
         msg: "Photos Uploaded Successfully",
