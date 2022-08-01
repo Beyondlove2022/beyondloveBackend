@@ -88,3 +88,15 @@ export const updateCustomerProfile = async (req, res) => {
     return res.json({ success: false, msg: "Something went wrong", error });
   }
 };
+
+export const getCustomerProfile = async (req, res) => {
+  const id = req.params.id;
+  try {
+    let customer = await Customer.findById(id);
+    if (!customer)
+      return res.json({ success: false, msg: "Profile not found" });
+    return res.json({ success: true, customer: customer });
+  } catch (error) {
+    return res.json({ success: false, msg: "Something went wrong", error });
+  }
+};

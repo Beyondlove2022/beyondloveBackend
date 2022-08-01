@@ -2,6 +2,7 @@ import express from "express";
 import {
   customerLogin,
   customerRegister,
+  getCustomerProfile,
   updateCustomerProfile,
 } from "../Controllers/customer.js";
 import { customerAuthentication } from "../Middleware/authentication.js";
@@ -15,5 +16,6 @@ route.put(
   customerAuthentication,
   updateCustomerProfile
 );
+route.get("/customer/get-profile", getCustomerProfile);
 
 export default route;

@@ -392,3 +392,52 @@ export const getPhoto = async (req, res) => {
     });
   }
 };
+
+// Like Function
+export const customerLikeOrUnlike = async (req, res) => {
+  const customerId = req.user.id;
+  const businessId = req.body.businessId;
+  const category = req.params.category;
+  try {
+    let categoryName;
+    if (category == "PetClinic") {
+      console.log("comes");
+      categoryName = PetClinic;
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const findBusiness = await categoryName.findById(businessId);
+    let likedCustomers = findBusiness.likes;
+    const liked = likedCustomers.some((l) => l == customerId);
+    if (liked) {
+      likedCustomers = likedCustomers.filter((l) => l != customerId);
+      console.log(likedCustomers);
+      await categoryName.findByIdAndUpdate(
+        { _id: businessId },
+        { likes: likedCustomers }
+      );
+      return res.json({ success: true, msg: "Unlike Success", like: false });
+    }
+    if (!liked) {
+      likedCustomers.push(customerId);
+      // console.log(like)
+      console.log(customerId);
+      console.log(likedCustomers, "ch");
+      await categoryName.findByIdAndUpdate(
+        { _id: businessId },
+        { likes: likedCustomers }
+      );
+      return res.json({ success: true, msg: "Like Success", like: true });
+    }
+  } catch (error) {
+    return res.json({ success: false, msg: "Something went wrong", error });
+  }
+};
