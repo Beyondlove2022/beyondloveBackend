@@ -8,6 +8,7 @@ import {
   getUniqueCategoryProfiles,
   login,
   register,
+  registerWithOtp,
   updateBusinessProfile,
   uploadPhoto,
 } from "../Controllers/Business.js";
@@ -26,6 +27,7 @@ const upload = multer({
 
 const route = express.Router();
 
+route.post("/business/register-otp/:number", registerWithOtp);
 route.post("/business/register", register);
 route.post("/business/login", login);
 route.put(

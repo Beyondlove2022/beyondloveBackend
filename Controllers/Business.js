@@ -7,6 +7,34 @@ import PetBoarding from "../Models/petBoarding.js";
 import { generateToken } from "../Utils/jwtToken.js";
 import { downloadFile, uploadfile } from "../Utils/s3Bucket.js";
 
+export const registerWithOtp = async (req, res) => {
+  const to = req.params.number;
+  const userType = req.body.type;
+  const msg = process.env.REGISTOR_MESSAGE;
+  const template_id = process.env.DLT_REGISTRATION;
+  const otpType = "register";
+  const category = req.params.category;
+  try {
+    // console.log(to);
+    return await generateOTP(
+      to,
+      msg,
+      template_id,
+      userType,
+      otpType,
+      req,
+      res,
+      category
+    );
+  } catch (error) {
+    return res.json({
+      success: false,
+      msg: "Something Went Wrong",
+      error: error,
+    });
+  }
+};
+
 export const register = async (req, res) => {
   let { businessName, email, mobile, password, category } = req.body;
 
