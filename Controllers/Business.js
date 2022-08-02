@@ -6,6 +6,7 @@ import PetFood from "../Models/petFood.js";
 import PetBoarding from "../Models/petBoarding.js";
 import { generateToken } from "../Utils/jwtToken.js";
 import { downloadFile, uploadfile } from "../Utils/s3Bucket.js";
+import { generateOTP } from "../Utils/sendOtp.js";
 
 export const registerWithOtp = async (req, res) => {
   const to = req.params.number;
@@ -15,7 +16,7 @@ export const registerWithOtp = async (req, res) => {
   const otpType = "register";
   const category = req.params.category;
   try {
-    // console.log(to);
+    console.log(to);
     return await generateOTP(
       to,
       msg,

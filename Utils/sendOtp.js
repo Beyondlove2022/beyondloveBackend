@@ -5,8 +5,9 @@ import PetFood from "../Models/petFood.js";
 import PetGrooming from "../Models/petGrooming.js";
 import PetTraining from "../Models/petTraining.js";
 import Customer from "../Models/customer/account.js";
+import Otp from "../Models/otp.js";
 
-const generateOTP = async (
+export const generateOTP = async (
   to,
   msg,
   template_id,

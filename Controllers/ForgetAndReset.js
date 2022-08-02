@@ -1,23 +1,34 @@
 import bcrypt from "bcryptjs";
-import Customer from "../Models/customer/account";
+import Customer from "../Models/customer/account.js";
 import PetBoarding from "../Models/petBoarding.js";
 import PetClinic from "../Models/petClinic.js";
 import PetFood from "../Models/petFood.js";
 import PetGrooming from "../Models/petGrooming.js";
 import PetTraining from "../Models/petTraining.js";
-import Otp from "../Models/otp";
-import { register } from "./Business";
-import { customerRegister } from "./customer";
+import Otp from "../Models/otp.js";
+import { register } from "./Business.js";
+import { customerRegister } from "./customer.js";
+import { generateOTP } from "../Utils/sendOtp.js";
 
 export const forgetPassword = async (req, res) => {
   const to = req.params.number;
   const userType = req.body.type;
-  let msg;
-  let template_id;
+  const msg = process.env.FORGET_PASSWORD_MESSAGE;
+  const template_id = process.env.DLT_PASSWORD_RESET;
   const otpType = "reset";
-
+  const category = req.params.category;
+  console.log(category);
   try {
-    return await generateOTP(to, msg, template_id, userType, otpType, req, res);
+    return await generateOTP(
+      to,
+      msg,
+      template_id,
+      userType,
+      otpType,
+      req,
+      res,
+      category
+    );
   } catch (error) {
     return res.json({ success: false, msg: "Something went wrong", error });
   }
@@ -27,6 +38,8 @@ export const resetPassword = async (req, res) => {
   const mobile = req.params.number;
   let password = req.body.password;
   const userType = req.body.type;
+  const category = req.params.category;
+  console.log(password, userType);
   try {
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);
@@ -54,7 +67,7 @@ export const resetPassword = async (req, res) => {
       const business = await categoryName.findById(user._id);
       return res.json({
         success: true,
-        msg: "Password Resetted Successfully",
+        msg: "Password Reset Successfully",
         business,
       });
     }
@@ -65,7 +78,7 @@ export const resetPassword = async (req, res) => {
       const customer = await Customer.findById(user._id);
       return res.json({
         success: true,
-        msg: "Password Resetted Successfully",
+        msg: "Password Reset Successfully",
         customer: customer,
       });
     }
@@ -81,6 +94,7 @@ export const resetPassword = async (req, res) => {
 export const verifyOTP = async (req, res) => {
   const otp = req.params.otp;
   const mobile = req.body.mobile;
+  console.log(otp, mobile);
   try {
     const mobileOtps = await Otp.find({ mobile });
     let otpFind = mobileOtps.filter((otps) => otps.verified == false);

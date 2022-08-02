@@ -4,6 +4,7 @@ import cors from "cors";
 import Business from "./Routes/Business.js";
 import Customer from "./Routes/Customer.js";
 import Pet from "./Routes/Pet.js";
+import ForgetAndReset from "./Routes/ForgetAndReset.js";
 
 import connectdb from "./Middleware/connectDb.js";
 
@@ -21,6 +22,7 @@ app.use(express.json({ extended: true }));
 app.use("/api", Business);
 app.use("/api", Customer);
 app.use("/api", Pet);
+app.use("/api", ForgetAndReset);
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}, on ${process.env.NODE_ENV} mode`);
