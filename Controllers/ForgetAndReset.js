@@ -35,10 +35,10 @@ export const forgetPassword = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-  const mobile = req.params.number;
+  const mobile = req.body.mobile;
   let password = req.body.password;
   const userType = req.body.type;
-  const category = req.params.category;
+  const category = req.body.category;
   console.log(password, userType);
   try {
     const salt = await bcrypt.genSalt(10);
@@ -62,7 +62,9 @@ export const resetPassword = async (req, res) => {
           msg: "This category not available",
         });
       }
+      console.log(mobile);
       const user = await categoryName.findOne({ mobile });
+      console.log({ user });
       await categoryName.findByIdAndUpdate({ _id: user._id }, { password });
       const business = await categoryName.findById(user._id);
       return res.json({
@@ -116,6 +118,10 @@ export const verifyOTP = async (req, res) => {
         if (otpFind[n - 1].userType == "Customer") {
           return await customerRegister(req, res);
         }
+      }
+      if (otpFind[n - 1].otpType == "reset") {
+        console.log("reset");
+        return await resetPassword(req, res);
       }
       return res.json({ success: true, msg: "OTP Verified " });
     }

@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 
 import { generateToken } from "../Utils/jwtToken.js";
 import Customer from "../Models/customer/account.js";
+import { generateOTP } from "../Utils/sendOtp.js";
 
 export const customerRegisterWithOtp = async (req, res) => {
   const to = req.params.number;
@@ -10,7 +11,7 @@ export const customerRegisterWithOtp = async (req, res) => {
   const template_id = process.env.DLT_REGISTRATION;
   const otpType = "register";
   try {
-    // console.log(to);
+    console.log(to);
     return await generateOTP(to, msg, template_id, userType, otpType, req, res);
   } catch (error) {
     return res.json({
