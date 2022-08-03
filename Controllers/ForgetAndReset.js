@@ -117,7 +117,7 @@ export const verifyOTP = async (req, res) => {
           return await customerRegister(req, res);
         }
       }
-      return res.json({ success: true, msg: "OTP Verified" });
+      return res.json({ success: true, msg: "OTP Verified " });
     }
     console.log(otpFind[n - 1].otp, otp);
     if (otpFind[n - 1].otp != otp)
