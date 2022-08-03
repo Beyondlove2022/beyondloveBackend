@@ -10,7 +10,7 @@ import { customerAuthentication } from "../Middleware/authentication.js";
 
 const route = express.Router();
 
-route.post("/customer/register-otp", customerRegisterWithOtp);
+route.post("/customer/register-otp/:number", customerRegisterWithOtp);
 route.post("/customer/register", customerRegister);
 route.post("/customer/login", customerLogin);
 route.put(
