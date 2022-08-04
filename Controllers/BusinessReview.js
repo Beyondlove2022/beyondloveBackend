@@ -4,7 +4,7 @@ export const createReview = async (req, res) => {
   const customerId = req.user._id;
   const customerName = req.user.name;
   const customerEmail = req.user.email;
-  const customerProfilePic = req.user.profilePicture;
+  // const customerProfilePic = req.user.profilePicture;
   const { businessId, customerReview, customerRating } = req.body;
   try {
     const rev = await new BusinessReviews({
