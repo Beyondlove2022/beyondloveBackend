@@ -5,6 +5,7 @@ import Business from "./Routes/Business.js";
 import Customer from "./Routes/Customer.js";
 import Pet from "./Routes/Pet.js";
 import ForgetAndReset from "./Routes/ForgetAndReset.js";
+import BusinessReview from "./Routes/BusinessReview.js";
 
 import connectdb from "./Middleware/connectDb.js";
 
@@ -23,6 +24,7 @@ app.use("/api", Business);
 app.use("/api", Customer);
 app.use("/api", Pet);
 app.use("/api", ForgetAndReset);
+app.use("/api", BusinessReview);
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}, on ${process.env.NODE_ENV} mode`);
