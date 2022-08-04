@@ -9,8 +9,9 @@ import {
   customerAuthentication,
 } from "../Middleware/authentication.js";
 
-const router = express.Router();
+const route = express.Router();
 
-router.post("/create-review/:token", customerAuthentication, createReview);
-router.get("/get-review/:businessId", getReview);
-router.put("/create-replay/:token", businessAuthentication, createReply);
+route.post("/create-review/:token", customerAuthentication, createReview);
+route.get("/get-review/:businessId", getReview);
+route.put("/create-replay/:token", businessAuthentication, createReply);
+export default route;
