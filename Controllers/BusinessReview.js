@@ -12,7 +12,7 @@ export const createReview = async (req, res) => {
       customerId,
       customerEmail,
       customerName,
-      customerProfilePic,
+      // customerProfilePic,
       customerReview,
       customerRating,
     });
@@ -35,7 +35,7 @@ export const createReview = async (req, res) => {
 export const getReview = async (req, res) => {
   const businessId = req.params.businessId;
   try {
-    const review = await BusinessReviews.find({ vnedorId });
+    const review = await BusinessReviews.find({ businessId });
     return res.json({ success: true, review: review });
   } catch (error) {
     return res.json({ success: false, msg: "Something went wrong", error });
