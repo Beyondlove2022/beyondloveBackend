@@ -23,6 +23,9 @@ const businessReviewSchema = new mongoose.Schema(
     reply: {
       type: String,
     },
+    customerName: {
+      type: String,
+    }
   },
   {
     timestamps: true,
