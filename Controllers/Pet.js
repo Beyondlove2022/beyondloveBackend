@@ -52,7 +52,11 @@ export const updatePetProfile = async (req, res) => {
   try {
     const pet = await Pet.findByIdAndUpdate({ _id: petId }, { $set: req.body });
     const petProfile = Pet.findById(petId);
-    return res.json({ success: true, msg: "Pet Profile updated successfully" });
+    return res.json({
+      success: true,
+      msg: "Pet Profile updated successfully",
+      petProfile,
+    });
   } catch (error) {
     console.log(error);
     return res.json({ success: false, msg: "Something went wrong" });
