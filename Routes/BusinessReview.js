@@ -13,5 +13,9 @@ const route = express.Router();
 
 route.post("/create-review/:token", customerAuthentication, createReview);
 route.get("/get-review/:businessId", getReview);
-route.put("/create-replay/:token", businessAuthentication, createReply);
+route.put(
+  "/create-replay/:token/:category",
+  businessAuthentication,
+  createReply
+);
 export default route;
