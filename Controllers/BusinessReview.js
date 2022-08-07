@@ -46,8 +46,10 @@ export const createReply = async (req, res) => {
   const businessId = req.user._id;
   const reviewId = req.body.reviewId;
   const reply = req.body.reply;
+  console.log({ businessId }, { reviewId }, { reply })
   try {
     const review = await BusinessReviews.findById(reviewId);
+    console.log({ review })
     if (review.businessId != businessId) {
       return res.json({
         success: false,
@@ -56,6 +58,7 @@ export const createReply = async (req, res) => {
     }
     await BusinessReviews.findByIdAndUpdate({ _id: reviewId }, { reply });
     const rev = await BusinessReviews.find({ businessId });
+    console.log({ rev })
     return res.json({
       success: true,
       msg: "Reply posted successfully",

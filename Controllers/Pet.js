@@ -81,8 +81,10 @@ export const getUniquePetProfile = async (req, res) => {
 
 export const getAllPetProfilebyCustomer = async (req, res) => {
   const { customerId } = req.params;
+  console.log(customerId)
   try {
     const customerPets = await Pet.find({ customerId });
+    console.log(customerPets)
     console.log("pets", customerPets);
     if (customerPets.length < 0)
       return res.json({ success: false, msg: "Pets Not Found" });
