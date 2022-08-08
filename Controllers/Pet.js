@@ -48,10 +48,10 @@ export const createPetProfile = async (req, res) => {
 export const updatePetProfile = async (req, res) => {
   const id = req.user.id;
   const { petId } = req.params;
-  console.log("petId:", petId);
+  console.log("petId:", req.body);
   try {
     const pet = await Pet.findByIdAndUpdate({ _id: petId }, { $set: req.body });
-    const petProfile = Pet.findById(petId);
+    const petProfile = await Pet.findById(petId);
     return res.json({
       success: true,
       msg: "Pet Profile updated successfully",
