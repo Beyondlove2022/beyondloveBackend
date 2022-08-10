@@ -58,6 +58,10 @@ route.put(
   customerAuthentication,
   customerLikeOrUnlike
 );
-route.put("/business/delete-image/:category/:token", deleteBusinessImages);
+route.put(
+  "/business/delete-image/:category/:token",
+  businessAuthentication,
+  deleteBusinessImages
+);
 
 export default route;
