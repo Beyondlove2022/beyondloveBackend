@@ -10,7 +10,7 @@ const petSchema = new Schema({
   gender: { type: String },
   trained: { type: Boolean },
   trainings: { type: String },
-  profilepic: { type: String },
+  profilePic: { type: String, default: "common/pet/pet.png" },
   weight: { type: Number },
   active: { type: String },
   vaccinationDetails: { type: Array },

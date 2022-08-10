@@ -1,4 +1,5 @@
 import express from "express";
+import multer from "multer";
 import {
   createPetProfile,
   getAllPetProfile,
@@ -9,6 +10,18 @@ import {
   uploadPetProfilePic,
 } from "../Controllers/Pet.js";
 import { customerAuthentication } from "../Middleware/authentication.js";
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({
+  storage: storage,
+});
 
 const route = express.Router();
 
@@ -30,6 +43,7 @@ route.get(
 route.get("/customer/pet/get-allprofiles", getAllPetProfile);
 route.put(
   "/customer/pet/upload-profile-pic/:token/:petId",
+  upload.array("file", 100),
   customerAuthentication,
   uploadPetProfilePic
 );

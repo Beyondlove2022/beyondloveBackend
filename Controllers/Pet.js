@@ -108,11 +108,13 @@ export const getAllPetProfile = async (req, res) => {
 export const uploadPetProfilePic = async (req, res) => {
   const file = req.files;
   const customerId = req.user.id;
-  const petId = req.params;
+  const { petId } = req.params;
   try {
+    console.log(file, "file");
     const result = await uploadfile(file, customerId, petId);
     const profilePic = result.Key;
-    await Pet.findByIdAndUpdate({ _id: id }, { profilePic });
+    console.log(profilePic, "pic result");
+    await Pet.findByIdAndUpdate({ _id: petId }, { profilePic });
     const pet = await Pet.findById(petId);
     return res.json({
       success: true,
