@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import {
   customerLikeOrUnlike,
+  deleteBusinessImages,
   getAllCategoryProfiles,
   getBusinessProfile,
   getPhoto,
@@ -57,5 +58,6 @@ route.put(
   customerAuthentication,
   customerLikeOrUnlike
 );
+route.put("/business/delete-image/:category/:token", deleteBusinessImages);
 
 export default route;

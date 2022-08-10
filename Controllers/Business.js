@@ -470,3 +470,47 @@ export const customerLikeOrUnlike = async (req, res) => {
     return res.json({ success: false, msg: "Something went wrong", error });
   }
 };
+
+export const deleteBusinessImages = async (req, res) => {
+  const id = req.user.id;
+  const { category } = req.params;
+  const { rmImage } = req.body;
+  try {
+    let categoryName;
+    if (category == "PetClinic") {
+      console.log("comes");
+      categoryName = PetClinic;
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const findBusiness = await categoryName.findById(id);
+    if (!findBusiness)
+      return res.json({
+        success: false,
+        msg: "Please login or register to access",
+      });
+    const allImages = findBusiness.images;
+    console.log(allImages, "allimages");
+    const images = allImages.filter((img) => img != rmImage);
+    console.log(images, "images");
+    await categoryName.findByIdAndUpdate({ _id: id }, { $set: images });
+    return res.json({
+      success: true,
+      msg: "Image Deleted Successfully",
+      businessImages: images,
+    });
+  } catch {
+    return res.json({
+      success: false,
+      msg: "Something Went Wrong On Image Deletion",
+    });
+  }
+};
