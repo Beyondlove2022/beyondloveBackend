@@ -501,7 +501,7 @@ export const deleteBusinessImages = async (req, res) => {
     console.log(allImages, "allimages");
     const images = allImages.filter((img) => img != rmImage);
     console.log(images, "images");
-    await categoryName.findByIdAndUpdate({ _id: id }, { $set: images });
+    await categoryName.findByIdAndUpdate({ _id: id }, { images });
     return res.json({
       success: true,
       msg: "Image Deleted Successfully",
