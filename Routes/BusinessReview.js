@@ -3,6 +3,7 @@ import {
   createReply,
   createReview,
   getReview,
+  reviewDelete,
 } from "../Controllers/BusinessReview.js";
 import {
   businessAuthentication,
@@ -17,5 +18,10 @@ route.put(
   "/create-replay/:token/:category",
   businessAuthentication,
   createReply
+);
+route.delete(
+  "/delete-review/:reviewId/:token",
+  customerAuthentication,
+  reviewDelete
 );
 export default route;
