@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  createAppointment,
   customerLogin,
   customerRegister,
   customerRegisterWithOtp,
@@ -19,5 +20,10 @@ route.put(
   updateCustomerProfile
 );
 route.get("/customer/get-profile/:id", getCustomerProfile);
+route.post(
+  "/customer/appointment-booking/:token",
+  customerAuthentication,
+  createAppointment
+);
 
 export default route;

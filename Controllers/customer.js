@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../Utils/jwtToken.js";
 import Customer from "../Models/customer/account.js";
 import { generateOTP } from "../Utils/sendOtp.js";
+import Appointment from "../Models/customer/appointment.js";
 
 export const customerRegisterWithOtp = async (req, res) => {
   const to = req.params.number;
@@ -117,5 +118,92 @@ export const getCustomerProfile = async (req, res) => {
     return res.json({ success: true, customer: customer });
   } catch (error) {
     return res.json({ success: false, msg: "Something went wrong", error });
+  }
+};
+
+export const createAppointment = async (req, res) => {
+  const customerId = req.user.id;
+  const { name, mobile, category, city, location, appointmentDate } = req.body;
+  try {
+    const customer = await Customer.findById(customerId);
+    if (!customer)
+      return res.json({
+        success: false,
+        msg: "Please Login As an customer To Access This Resource",
+      });
+    const appointment = await new Appointment({
+      customerId,
+      name,
+      mobile,
+      category,
+      city,
+      location,
+      appointmentDate,
+    });
+    await appointment.save();
+    return res.json({
+      success: true,
+      msg: "We will reach you soon",
+      appointment,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "Something went wrong", error });
+  }
+};
+
+export const getUniqueAppointment = async (req, res) => {
+  // const id = req.admin.id
+  const { appointmentId } = req.params;
+  try {
+    const appointment = await Appointment.findById(appointmentId);
+    if (!appointment)
+      return res.json({ success: false, msg: "This Appointment Not Found" });
+    return res.json({
+      success: true,
+      msg: "Appointment Sended Successfully",
+      appointment,
+    });
+  } catch (error) {
+    return res.json({ success: false, msg: "Something went wrong", error });
+  }
+};
+
+export const getAllAppointments = async (req, res) => {
+  try {
+    const appointments = await Appointment.find();
+    return res.json({
+      success: true,
+      msg: "All Appointment Sended Successfully",
+      appointments,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "Something Went Wrong", error });
+  }
+};
+
+export const fixAppointment = async (req, res) => {
+  const { appointmentId, appointmentFixed } = req.params;
+  try {
+    const appointment = await Appointment.find(appointmentId);
+    if (!appointment)
+      return res.json({ success: false, msg: "This Appointment Not Found" });
+    await Appointment.findByIdAndUpdate(
+      { _id: appointmentId },
+      { appointmentFixed }
+    );
+    const appointmentData = await Appointment.find(appointmentId);
+    return res.json({
+      success: true,
+      msg: "Appointment Fixed",
+      appointment: appointmentData,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      succes: false,
+      msg: "Something went wrong on appointment fixing",
+    });
   }
 };

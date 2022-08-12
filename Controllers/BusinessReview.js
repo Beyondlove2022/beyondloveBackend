@@ -73,8 +73,9 @@ export const reviewDelete = async (req, res) => {
   const customerId = req.user.id;
   const { reviewId } = req.params;
   try {
-    console.log(req.body);
+    console.log(customerId, reviewId);
     const review = await BusinessReviews.findById(reviewId);
+    console.log(review, "review");
     if (!review)
       return res.json({ success: false, msg: "This review not found" });
     if (review.customerId != customerId)
@@ -84,7 +85,11 @@ export const reviewDelete = async (req, res) => {
       });
     await BusinessReviews.findByIdAndDelete(reviewId);
     const rev = await BusinessReviews.find();
-    return res.json({ success: true, review: rev });
+    return res.json({
+      success: true,
+      review: rev,
+      msg: "review deleted successfully",
+    });
   } catch (error) {
     return res.json({
       success: false,
