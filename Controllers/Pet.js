@@ -145,7 +145,7 @@ export const getPetProfilePhoto = async (req, res, next) => {
   }
 };
 
-export const uploadPetVaccinationPic = async (req, res) => {
+export const uploadPetVaccinationCertificationImage = async (req, res) => {
   const file = req.files;
   const customerId = req.user.id;
   const { petId } = req.params;
