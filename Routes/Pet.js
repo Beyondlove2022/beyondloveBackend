@@ -8,6 +8,7 @@ import {
   getUniquePetProfile,
   updatePetProfile,
   uploadPetProfilePic,
+  uploadPetVaccinationCertificationImage,
 } from "../Controllers/Pet.js";
 import { customerAuthentication } from "../Middleware/authentication.js";
 
@@ -48,5 +49,11 @@ route.put(
   uploadPetProfilePic
 );
 route.get("/customer/pet/get-pet-profile-pic/:id", getPetProfilePhoto);
+route.put(
+  "/customer/pet/vaccination-pic/:token/:petId",
+  upload.array("file", 100),
+  customerAuthentication,
+  uploadPetVaccinationCertificationImage
+);
 
 export default route;

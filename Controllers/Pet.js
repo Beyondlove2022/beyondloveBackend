@@ -150,18 +150,23 @@ export const uploadPetVaccinationCertificationImage = async (req, res) => {
   const customerId = req.user.id;
   const { petId } = req.params;
   try {
-    console.log(file, "file");
+    const petData = await Pet.findById(petId);
+    if (!petData) {
+      return res.json({ success: false, msg: "Pet Details not Fund" });
+    }
     const result = await uploadfile(file, customerId, petId);
-    const profilePic = result.Key;
-    console.log(profilePic, "pic result");
-    await Pet.findByIdAndUpdate({ _id: petId }, { profilePic });
+    const pic = result.Key;
+    let vacinationCertificates = petData.vacinationCertificates;
+    vacinationCertificates.push(pic);
+    await Pet.findByIdAndUpdate({ _id: petId }, { vacinationCertificates });
     const pet = await Pet.findById(petId);
     return res.json({
       success: true,
-      msg: "Profile Image uploaded successfully",
-      pet,
+      msg: "vaccination Image uploaded successfully",
+      petCertificate: pet.vacinationCertificates,
     });
   } catch (error) {
+    console.log(error);
     return res.json({ success: false, msg: "Something went wrong", error });
   }
 };
