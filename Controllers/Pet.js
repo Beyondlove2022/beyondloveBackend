@@ -81,10 +81,10 @@ export const getUniquePetProfile = async (req, res) => {
 
 export const getAllPetProfilebyCustomer = async (req, res) => {
   const { customerId } = req.params;
-  console.log(customerId)
+  console.log(customerId);
   try {
     const customerPets = await Pet.find({ customerId });
-    console.log(customerPets)
+    console.log(customerPets);
     console.log("pets", customerPets);
     if (customerPets.length < 0)
       return res.json({ success: false, msg: "Pets Not Found" });
@@ -142,5 +142,26 @@ export const getPetProfilePhoto = async (req, res, next) => {
       msg: "Something went wrong",
       error: error,
     });
+  }
+};
+
+export const uploadPetVaccinationPic = async (req, res) => {
+  const file = req.files;
+  const customerId = req.user.id;
+  const { petId } = req.params;
+  try {
+    console.log(file, "file");
+    const result = await uploadfile(file, customerId, petId);
+    const profilePic = result.Key;
+    console.log(profilePic, "pic result");
+    await Pet.findByIdAndUpdate({ _id: petId }, { profilePic });
+    const pet = await Pet.findById(petId);
+    return res.json({
+      success: true,
+      msg: "Profile Image uploaded successfully",
+      pet,
+    });
+  } catch (error) {
+    return res.json({ success: false, msg: "Something went wrong", error });
   }
 };
