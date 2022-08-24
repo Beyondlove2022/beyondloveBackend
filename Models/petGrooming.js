@@ -21,7 +21,7 @@ const petGroomingSchema = new Schema(
     verified: { type: Boolean, default: false },
     trending: { type: Boolean, default: false },
     images: { type: Array, default: [] },
-    coverImage: { type: String, default: "common/cover/grooming.jpg" },
+    coverImage: { type: String, default: "common/cover/grooming.png" },
     profileImage: { type: String, default: "common/profile/grooming.jpg" },
     likes: { type: Array },
     facilities: { type: Array },

@@ -285,40 +285,45 @@ export const getServiceProvidersCount = async (req, res) => {
     let petGroomingCount = 0;
     let petFoodCount = 0;
     const petClinic = await PetClinic.find();
-    for (var i = 0; i < petClinic.length; i++) {
-      serviceProvidersCount = serviceProvidersCount + 1;
-      petClinicCount = petClinicCount + 1;
-    }
+    // for (var i = 0; i < petClinic.length; i++) {
+    //   serviceProvidersCount = serviceProvidersCount + 1;
+    //   petClinicCount = petClinicCount + 1;
+    // }
     const petBoarding = await PetBoarding.find();
-    for (var i = 0; i < petBoarding.length; i++) {
-      serviceProvidersCount = serviceProvidersCount + 1;
-      petBoardingCount = petBoardingCount + 1;
-    }
+    // for (var i = 0; i < petBoarding.length; i++) {
+    //   serviceProvidersCount = serviceProvidersCount + 1;
+    //   petBoardingCount = petBoardingCount + 1;
+    // }
     const petGrooming = await PetGrooming.find();
-    for (var i = 0; i < petGrooming.length; i++) {
-      serviceProvidersCount = serviceProvidersCount + 1;
-      petGroomingCount = petGroomingCount + 1;
-    }
+    // for (var i = 0; i < petGrooming.length; i++) {
+    //   serviceProvidersCount = serviceProvidersCount + 1;
+    //   petGroomingCount = petGroomingCount + 1;
+    // }
     const petTraining = await PetTraining.find();
-    for (var i = 0; i < petTraining.length; i++) {
-      serviceProvidersCount = serviceProvidersCount + 1;
-      petTrainingCount = petTrainingCount + 1;
-    }
+    // for (var i = 0; i < petTraining.length; i++) {
+    //   serviceProvidersCount = serviceProvidersCount + 1;
+    //   petTrainingCount = petTrainingCount + 1;
+    // }
     const petFood = await PetFood.find();
-    for (var i = 0; i < petFood.length; i++) {
-      serviceProvidersCount = serviceProvidersCount + 1;
-      petFoodCount = petFoodCount + 1;
-    }
+    // for (var i = 0; i < petFood.length; i++) {
+    //   serviceProvidersCount = serviceProvidersCount + 1;
+    //   petFoodCount = petFoodCount + 1;
+    // }
     console.log(serviceProvidersCount, "serviceProvider");
     return res.json({
       success: true,
       msg: "Service Provider Count Sent Successfully",
-      serviceProvidersCount,
-      petClinicCount,
-      petBoardingCount,
-      petGroomingCount,
-      petTrainingCount,
-      petFoodCount,
+      serviceProvidersCount:
+        petClinic.length +
+        petBoarding.length +
+        petGrooming.length +
+        petTraining.length +
+        petFood.length,
+      petClinicCount: petClinic.length,
+      petBoardingCount: petBoarding.length,
+      petGroomingCount: petGrooming.length,
+      petTrainingCount: petTraining.length,
+      petFoodCount: petFood.length,
     });
   } catch (error) {
     return res.json({ success: false, msg: "something went wrong" });

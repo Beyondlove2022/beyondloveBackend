@@ -22,7 +22,7 @@ const petClinicSchema = new Schema(
     verified: { type: Boolean, default: false },
     trending: { type: Boolean, default: false },
     images: { type: Array, default: [] },
-    coverImage: { type: String, default: "common/cover/clinic.jpg" },
+    coverImage: { type: String, default: "common/cover/clinic.png" },
     profileImage: { type: String, default: "common/profile/clinic.jpg" },
     likes: { type: Array },
     facebookUrl: { type: String },

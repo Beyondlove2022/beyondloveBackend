@@ -22,7 +22,7 @@ const petFoodSchema = new Schema(
     verified: { type: Boolean, default: false },
     trending: { type: Boolean, default: false },
     images: { type: Array, default: [] },
-    coverImage: { type: String, default: "common/cover/food.jpg" },
+    coverImage: { type: String, default: "common/cover/food.png" },
     profileImage: { type: String, default: "common/profile/food.jpg" },
     likes: { type: Array },
     veg: { type: Boolean },

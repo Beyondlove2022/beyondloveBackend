@@ -22,7 +22,7 @@ const petTrainingSchema = new Schema(
     verified: { type: Boolean, default: false },
     trending: { type: Boolean, default: false },
     images: { type: Array, default: [] },
-    coverImage: { type: String, default: "common/cover/training.jpg" },
+    coverImage: { type: String, default: "common/cover/training.png" },
     profileImage: { type: String, default: "common/profile/training.jpg" },
     likes: { type: Array },
     packages: { type: Array },
