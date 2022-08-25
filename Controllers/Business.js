@@ -211,25 +211,40 @@ export const getBusinessProfile = async (req, res, next) => {
 };
 
 export const getAllCategoryProfiles = async (req, res) => {
+  const { pageNo } = req.params;
+  let skipClinicAndBoarding = 0;
+  let skipGroomingAndTraining = 0;
+  for (var i = 1; i < pageNo; i++) {
+    skipClinicAndBoarding += 3;
+    skipGroomingAndTraining += 2;
+  }
   let profilesArray = [];
   try {
-    const petClinic = await PetClinic.find();
+    const petClinic = await PetClinic.find()
+      .skip(skipClinicAndBoarding)
+      .limit(3);
     console.log({ petClinic });
     petClinic.map((clinic) => {
       profilesArray.push(clinic);
     });
 
-    const petBoarding = await PetBoarding.find();
+    const petBoarding = await PetBoarding.find()
+      .skip(skipClinicAndBoarding)
+      .limit(3);
     petBoarding.map((boarding) => {
       profilesArray.push(boarding);
     });
 
-    const petGrooming = await PetGrooming.find();
+    const petGrooming = await PetGrooming.find()
+      .skip(skipGroomingAndTraining)
+      .limit(2);
     petGrooming.map((grooming) => {
       profilesArray.push(grooming);
     });
 
-    const petTraining = await PetTraining.find();
+    const petTraining = await PetTraining.find()
+      .skip(skipGroomingAndTraining)
+      .limit(2);
     petTraining.map((training) => {
       profilesArray.push(training);
     });
@@ -238,10 +253,6 @@ export const getAllCategoryProfiles = async (req, res) => {
     petFood.map((food) => {
       profilesArray.push(food);
     });
-    //   if (petFood.length <= 0) {
-    //     return res.json({ success: false, msg: "No Profiles in this category" });
-    //   }
-    console.log({ profilesArray });
     return res.json({ success: true, profilesArray });
   } catch (error) {
     return res.json({
@@ -253,7 +264,11 @@ export const getAllCategoryProfiles = async (req, res) => {
 };
 
 export const getUniqueCategoryProfiles = async (req, res) => {
-  const { category } = req.params;
+  const { category, pageNo } = req.params;
+  let skip = 0;
+  for (var i = 1; i < pageNo; i++) {
+    skip += 10;
+  }
   let categoryName;
   if (category == "PetClinic") {
     categoryName = PetClinic;
@@ -268,13 +283,277 @@ export const getUniqueCategoryProfiles = async (req, res) => {
   } else {
     return res.json({ success: false, msg: "This category not available" });
   }
-  const business = await categoryName.find();
+  const business = await categoryName.find().skip(skip).limit(10);
   console.log({ business });
   if (business.length <= 0) {
     return res.json({ success: false, msg: "No Profiles in this category" });
   }
-  return res.json({ success: true, business });
+  return res.json({ success: true, business, count: business.length });
 };
+
+// For Filters Start
+export const getServiceProvidersByState = async (req, res) => {
+  const { state } = req.body;
+  const { pageNo } = req.params;
+  console.log(state);
+  let skipClinicAndBoarding = 0;
+  let skipGroomingAndTraining = 0;
+  for (var i = 1; i < pageNo; i++) {
+    skipClinicAndBoarding += 3;
+    skipGroomingAndTraining += 2;
+  }
+  let profilesArray = [];
+  try {
+    const petClinic = await PetClinic.find({ state })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petClinic.map((clinic) => {
+      profilesArray.push(clinic);
+    });
+
+    const petBoarding = await PetBoarding.find({ state })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petBoarding.map((boarding) => {
+      profilesArray.push(boarding);
+    });
+
+    const petGrooming = await PetGrooming.find({ state })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petGrooming.map((grooming) => {
+      profilesArray.push(grooming);
+    });
+
+    const petTraining = await PetTraining.find({ state })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petTraining.map((training) => {
+      profilesArray.push(training);
+    });
+
+    const petFood = await PetFood.find({ state });
+    petFood.map((food) => {
+      profilesArray.push(food);
+    });
+    return res.json({
+      success: true,
+      profilesArray,
+      count: profilesArray.length,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "something went wrong" });
+  }
+};
+export const getServiceProvidersByCity = async (req, res) => {
+  const { city } = req.body;
+  const { pageNo } = req.params;
+  console.log(city);
+  let skipClinicAndBoarding = 0;
+  let skipGroomingAndTraining = 0;
+  for (var i = 1; i < pageNo; i++) {
+    skipClinicAndBoarding += 3;
+    skipGroomingAndTraining += 2;
+  }
+  let profilesArray = [];
+  try {
+    const petClinic = await PetClinic.find({ city })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petClinic.map((clinic) => {
+      profilesArray.push(clinic);
+    });
+
+    const petBoarding = await PetBoarding.find({ state })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petBoarding.map((boarding) => {
+      profilesArray.push(boarding);
+    });
+
+    const petGrooming = await PetGrooming.find({ city })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petGrooming.map((grooming) => {
+      profilesArray.push(grooming);
+    });
+
+    const petTraining = await PetTraining.find({ city })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petTraining.map((training) => {
+      profilesArray.push(training);
+    });
+
+    const petFood = await PetFood.find({ city });
+    petFood.map((food) => {
+      profilesArray.push(food);
+    });
+    return res.json({
+      success: true,
+      profilesArray,
+      count: profilesArray.length,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "something went wrong" });
+  }
+};
+export const getServiceProvidersByLocation = async (req, res) => {
+  const { location } = req.body;
+  const { pageNo } = req.params;
+  let skipClinicAndBoarding = 0;
+  let skipGroomingAndTraining = 0;
+  for (var i = 1; i < pageNo; i++) {
+    skipClinicAndBoarding += 3;
+    skipGroomingAndTraining += 2;
+  }
+  let profilesArray = [];
+  try {
+    const petClinic = await PetClinic.find({ location })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petClinic.map((clinic) => {
+      profilesArray.push(clinic);
+    });
+
+    const petBoarding = await PetBoarding.find({ location })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petBoarding.map((boarding) => {
+      profilesArray.push(boarding);
+    });
+
+    const petGrooming = await PetGrooming.find({ location })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petGrooming.map((grooming) => {
+      profilesArray.push(grooming);
+    });
+
+    const petTraining = await PetTraining.find({ location })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petTraining.map((training) => {
+      profilesArray.push(training);
+    });
+
+    const petFood = await PetFood.find({ location });
+    petFood.map((food) => {
+      profilesArray.push(food);
+    });
+    return res.json({
+      success: true,
+      profilesArray,
+      count: profilesArray.length,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "something went wrong" });
+  }
+};
+
+export const getServiceProvidersByStateAndCategory = async (req, res) => {
+  const { category, pageNo } = req.params;
+  const { state } = req.body;
+  let skip = 0;
+  try {
+    for (var i = 1; i < pageNo; i++) {
+      skip += 10;
+    }
+    let categoryName;
+    if (category == "PetClinic") {
+      categoryName = PetClinic;
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const business = await categoryName.find({ state }).skip(skip).limit(10);
+    console.log({ business });
+    if (business.length <= 0) {
+      return res.json({ success: false, msg: "No Profiles in this category" });
+    }
+    return res.json({ success: true, business, count: business.length });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "something went wrong" });
+  }
+};
+export const getServiceProvidersByCityAndCategory = async (req, res) => {
+  const { category, pageNo } = req.params;
+  const { city } = req.body;
+  let skip = 0;
+  try {
+    for (var i = 1; i < pageNo; i++) {
+      skip += 10;
+    }
+    let categoryName;
+    if (category == "PetClinic") {
+      categoryName = PetClinic;
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const business = await categoryName.find({ city }).skip(skip).limit(10);
+    console.log({ business });
+    if (business.length <= 0) {
+      return res.json({ success: false, msg: "No Profiles in this category" });
+    }
+    return res.json({ success: true, business, count: business.length });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "something went wrong" });
+  }
+};
+export const getServiceProvidersByLocationAndCategory = async (req, res) => {
+  const { category, pageNo } = req.params;
+  const { location } = req.body;
+  let skip = 0;
+  try {
+    for (var i = 1; i < pageNo; i++) {
+      skip += 10;
+    }
+    let categoryName;
+    if (category == "PetClinic") {
+      categoryName = PetClinic;
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const business = await categoryName.find({ location }).skip(skip).limit(10);
+    console.log({ business });
+    if (business.length <= 0) {
+      return res.json({ success: false, msg: "No Profiles in this category" });
+    }
+    return res.json({ success: true, business, count: business.length });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "something went wrong" });
+  }
+};
+// For Filters End
 
 export const getServiceProvidersCount = async (req, res) => {
   try {
