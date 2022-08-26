@@ -288,13 +288,18 @@ export const getUniqueCategoryProfiles = async (req, res) => {
   if (business.length <= 0) {
     return res.json({ success: false, msg: "No Profiles in this category" });
   }
-  return res.json({ success: true, business, count: business.length });
+  return res.json({
+    success: true,
+    profilesArray: business,
+    count: business.length,
+  });
 };
 
 // For Filters Start
 export const getServiceProvidersByState = async (req, res) => {
-  const { state } = req.body;
   const { pageNo } = req.params;
+  const { state0, state1 } = req.params;
+  const state = [state0, parseInt(state1)];
   console.log(state);
   let skipClinicAndBoarding = 0;
   let skipGroomingAndTraining = 0;
@@ -336,6 +341,9 @@ export const getServiceProvidersByState = async (req, res) => {
     petFood.map((food) => {
       profilesArray.push(food);
     });
+    if (profilesArray.length < 1) {
+      return res.json({ success: false, msg: "No Prfiles" });
+    }
     return res.json({
       success: true,
       profilesArray,
@@ -347,8 +355,9 @@ export const getServiceProvidersByState = async (req, res) => {
   }
 };
 export const getServiceProvidersByCity = async (req, res) => {
-  const { city } = req.body;
   const { pageNo } = req.params;
+  const { city0, city1, city2 } = req.params;
+  const city = [city0, parseInt(city1), parseInt(city2)];
   console.log(city);
   let skipClinicAndBoarding = 0;
   let skipGroomingAndTraining = 0;
@@ -365,7 +374,7 @@ export const getServiceProvidersByCity = async (req, res) => {
       profilesArray.push(clinic);
     });
 
-    const petBoarding = await PetBoarding.find({ state })
+    const petBoarding = await PetBoarding.find({ city })
       .skip(skipClinicAndBoarding)
       .limit(3);
     petBoarding.map((boarding) => {
@@ -390,6 +399,9 @@ export const getServiceProvidersByCity = async (req, res) => {
     petFood.map((food) => {
       profilesArray.push(food);
     });
+    if (profilesArray.length < 1) {
+      return res.json({ success: false, msg: "No Prfiles" });
+    }
     return res.json({
       success: true,
       profilesArray,
@@ -401,8 +413,14 @@ export const getServiceProvidersByCity = async (req, res) => {
   }
 };
 export const getServiceProvidersByLocation = async (req, res) => {
-  const { location } = req.body;
   const { pageNo } = req.params;
+  const { location0, location1, location2, location3 } = req.params;
+  let location = [
+    location0,
+    parseInt(location1),
+    parseInt(location2),
+    parseInt(location3),
+  ];
   let skipClinicAndBoarding = 0;
   let skipGroomingAndTraining = 0;
   for (var i = 1; i < pageNo; i++) {
@@ -443,6 +461,9 @@ export const getServiceProvidersByLocation = async (req, res) => {
     petFood.map((food) => {
       profilesArray.push(food);
     });
+    if (profilesArray.length < 1) {
+      return res.json({ success: false, msg: "No Prfiles" });
+    }
     return res.json({
       success: true,
       profilesArray,
@@ -456,7 +477,8 @@ export const getServiceProvidersByLocation = async (req, res) => {
 
 export const getServiceProvidersByStateAndCategory = async (req, res) => {
   const { category, pageNo } = req.params;
-  const { state } = req.body;
+  const { state0, state1 } = req.params;
+  const state = [state0, parseInt(state1)];
   let skip = 0;
   try {
     for (var i = 1; i < pageNo; i++) {
@@ -481,7 +503,11 @@ export const getServiceProvidersByStateAndCategory = async (req, res) => {
     if (business.length <= 0) {
       return res.json({ success: false, msg: "No Profiles in this category" });
     }
-    return res.json({ success: true, business, count: business.length });
+    return res.json({
+      success: true,
+      profilesArray: business,
+      count: business.length,
+    });
   } catch (error) {
     console.log(error);
     return res.json({ success: false, msg: "something went wrong" });
@@ -489,7 +515,8 @@ export const getServiceProvidersByStateAndCategory = async (req, res) => {
 };
 export const getServiceProvidersByCityAndCategory = async (req, res) => {
   const { category, pageNo } = req.params;
-  const { city } = req.body;
+  const { city0, city1, city2 } = req.params;
+  const city = [city0, parseInt(city1), parseInt(city2)];
   let skip = 0;
   try {
     for (var i = 1; i < pageNo; i++) {
@@ -514,7 +541,11 @@ export const getServiceProvidersByCityAndCategory = async (req, res) => {
     if (business.length <= 0) {
       return res.json({ success: false, msg: "No Profiles in this category" });
     }
-    return res.json({ success: true, business, count: business.length });
+    return res.json({
+      success: true,
+      profilesArray: business,
+      count: business.length,
+    });
   } catch (error) {
     console.log(error);
     return res.json({ success: false, msg: "something went wrong" });
@@ -522,7 +553,13 @@ export const getServiceProvidersByCityAndCategory = async (req, res) => {
 };
 export const getServiceProvidersByLocationAndCategory = async (req, res) => {
   const { category, pageNo } = req.params;
-  const { location } = req.body;
+  const { location0, location1, location2, location3 } = req.params;
+  let location = [
+    location0,
+    parseInt(location1),
+    parseInt(location2),
+    parseInt(location3),
+  ];
   let skip = 0;
   try {
     for (var i = 1; i < pageNo; i++) {
@@ -547,7 +584,11 @@ export const getServiceProvidersByLocationAndCategory = async (req, res) => {
     if (business.length <= 0) {
       return res.json({ success: false, msg: "No Profiles in this category" });
     }
-    return res.json({ success: true, business, count: business.length });
+    return res.json({
+      success: true,
+      profilesArray: business,
+      count: business.length,
+    });
   } catch (error) {
     console.log(error);
     return res.json({ success: false, msg: "something went wrong" });

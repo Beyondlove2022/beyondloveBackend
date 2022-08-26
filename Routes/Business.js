@@ -73,24 +73,27 @@ route.put(
   deleteBusinessImages
 );
 route.get(
-  "/business/get-profiles-by-state/:pageNo",
+  "/business/get-profiles-by-state/:state0/:state1/:pageNo",
   getServiceProvidersByState
 );
-route.get("/business/get-profiles-by-city/:pageNo", getServiceProvidersByCity);
 route.get(
-  "/business/get-profiles-by-location/:pageNo",
+  "/business/get-profiles-by-city/:city0/:city1/:city2/:pageNo",
+  getServiceProvidersByCity
+);
+route.get(
+  "/business/get-profiles-by-location/:location0/:location1/:location2/:location3/:pageNo",
   getServiceProvidersByLocation
 );
 route.get(
-  "/business/get-profiles-by-state-category/:category/:pageNo",
+  "/business/get-profiles-by-state-category/:state0/:state1/:category/:pageNo",
   getServiceProvidersByStateAndCategory
 );
 route.get(
-  "/business/get-profiles-by-city-category/:category/:pageNo",
+  "/business/get-profiles-by-city-category/:city0/:city1/:city2/:category/:pageNo",
   getServiceProvidersByCityAndCategory
 );
 route.get(
-  "/business/get-profiles-by-location-category/:category/:pageNo",
+  "/business/get-profiles-by-location-category/:location0/:location1/:location2/:location3/:category/:pageNo",
   getServiceProvidersByLocationAndCategory
 );
 
