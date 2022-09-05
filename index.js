@@ -7,6 +7,7 @@ import Customer from "./Routes/Customer.js";
 import Pet from "./Routes/Pet.js";
 import ForgetAndReset from "./Routes/ForgetAndReset.js";
 import BusinessReview from "./Routes/BusinessReview.js";
+import Admin from "./Routes/Admin.js";
 
 import connectdb from "./Middleware/connectDb.js";
 
@@ -28,7 +29,8 @@ app.use("/api", Customer);
 app.use("/api", Pet);
 app.use("/api", ForgetAndReset);
 app.use("/api", BusinessReview);
+app.use("/api", Admin);
 
 app.listen(port, () => {
-  console.log(`http://localhost:${port}, on ${process.env.NODE_ENV} mode`);
+	console.log(`http://localhost:${port}, on ${process.env.NODE_ENV} mode`);
 });
