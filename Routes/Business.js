@@ -3,6 +3,8 @@ import multer from "multer";
 import {
   customerLikeOrUnlike,
   deleteBusinessImages,
+  deleteguru,
+  findguru,
   getAllCategoryProfiles,
   getBusinessProfile,
   getPhoto,
@@ -96,5 +98,7 @@ route.get(
   "/business/get-profiles-by-location-category/:location0/:location1/:location2/:location3/:category/:pageNo",
   getServiceProvidersByLocationAndCategory
 );
+route.get("/find-guru", findguru);
+route.delete("/delete-guru", deleteguru);
 
 export default route;

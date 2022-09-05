@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import Admin from "./Routes/Admin.js";
 import Business from "./Routes/Business.js";
 import Customer from "./Routes/Customer.js";
 import Pet from "./Routes/Pet.js";
@@ -20,6 +21,8 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ extended: true }));
+
+app.use("/api", Admin);
 app.use("/api", Business);
 app.use("/api", Customer);
 app.use("/api", Pet);

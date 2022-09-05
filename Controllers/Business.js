@@ -839,3 +839,21 @@ export const deleteBusinessImages = async (req, res) => {
     });
   }
 };
+
+export const findguru = async (req, res) => {
+  try {
+    const guru = await PetGrooming.find({ city: ["Gurgaon", 7, 582] });
+    return res.json({ success: true, count: guru.length, guru, msg: "Cinics" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteguru = async (req, res) => {
+  try {
+    const guru = await PetGrooming.deleteMany({ city: ["Gurgaon", 7, 582] });
+    return res.json({ success: true, msg: "deleted Success fully" });
+  } catch (error) {
+    console.log(error);
+  }
+};
