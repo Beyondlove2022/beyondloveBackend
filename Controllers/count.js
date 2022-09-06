@@ -1,24 +1,24 @@
 import Count from "../Models/count.js";
 
-export const countCreate = async (req, res) => {
-  try {
-    const count = new Count({
-      serviceProviders: 8592,
-      petClinics: 3053,
-      petBoardings: 1172,
-      petGroomings: 2062,
-      petTrainings: 2305,
-      petFoods: 0,
-      users: 10,
-      pets: 30,
-    });
-    await count.save();
-    return res.json({ success: true, msg: "Count Created", count });
-  } catch (error) {
-    console.log(error);
-    return res.json({ success: false, msg: "Something Went Wrong" });
-  }
-};
+// export const countCreate = async (req, res) => {
+//   try {
+//     const count = new Count({
+//       serviceProviders: 8592,
+//       petClinics: 3053,
+//       petBoardings: 1172,
+//       petGroomings: 2062,
+//       petTrainings: 2305,
+//       petFoods: 0,
+//       users: 10,
+//       pets: 30,
+//     });
+//     await count.save();
+//     return res.json({ success: true, msg: "Count Created", count });
+//   } catch (error) {
+//     console.log(error);
+//     return res.json({ success: false, msg: "Something Went Wrong" });
+//   }
+// };
 
 export const updateCount = async (c) => {
   const id = "6315cf26df9d25531c2828b1";
