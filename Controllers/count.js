@@ -1,0 +1,61 @@
+import Count from "../Models/count.js";
+
+export const countCreate = async (req, res) => {
+  try {
+    const count = new Count({
+      serviceProviders: 8592,
+      petClinics: 3053,
+      petBoardings: 1172,
+      petGroomings: 2062,
+      petTrainings: 2305,
+      petFoods: 0,
+      users: 10,
+      pets: 30,
+    });
+    await count.save();
+    return res.json({ success: true, msg: "Count Created", count });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "Something Went Wrong" });
+  }
+};
+
+export const updateCount = async (c) => {
+  const id = "6315cf26df9d25531c2828b1";
+  try {
+    const count = await Count.findById(id);
+    if (c === "PetClinic") {
+      let petClinics = count.petClinics + 1;
+      let serviceProviders = count.serviceProviders + 1;
+      await Count.findByIdAndUpdate(
+        { _id: id },
+        { petClinics, serviceProviders }
+      );
+    } else if (c === "PetBoarding") {
+      let petBoardings = count.petBoardings + 1;
+      await Count.findByIdAndUpdate({ _id: id }, { petBoardings });
+    } else if (c === "PetGrooming") {
+      let petGroomings = count.petGroomings + 1;
+      await Count.findByIdAndUpdate({ _id: id }, { petGroomings });
+    } else if (c === "PetTraining") {
+      let petTrainings = count.petTrainings + 1;
+      await Count.findByIdAndUpdate({ _id: id }, { petTrainings });
+    } else if (c === "PetFood") {
+      let petFoods = count.petFood + 1;
+      await Count.findByIdAndUpdate({ _id: id }, { petFoods });
+    } else if (c === "users") {
+      let users = count.users + 1;
+      await Count.findByIdAndUpdate({ _id: id }, { users });
+    } else if (c === "pets") {
+      let pets = count.pets + 1;
+      await Count.findByIdAndUpdate({ _id: id }, { pets });
+    } else {
+      return console.log("Nothing Matched");
+    }
+    const updatedCount = await Count.findById(id);
+    return updatedCount;
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "Something Went Wrong" });
+  }
+};

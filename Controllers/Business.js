@@ -7,6 +7,7 @@ import PetBoarding from "../Models/petBoarding.js";
 import { generateToken } from "../Utils/jwtToken.js";
 import { downloadFile, uploadfile } from "../Utils/s3Bucket.js";
 import { generateOTP } from "../Utils/sendOtp.js";
+import { updateCount } from "./count.js";
 
 export const registerWithOtp = async (req, res) => {
   const to = req.params.number;
@@ -88,6 +89,7 @@ export const register = async (req, res) => {
     const tok = { id: business._id };
     const token = await generateToken(tok);
     let businessDetails = await categoryName.findById(business._id);
+    await updateCount(category);
     return res.json({
       success: true,
       msg: "Registered Successfully",

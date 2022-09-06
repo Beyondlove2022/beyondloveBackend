@@ -1,5 +1,7 @@
 import Pet from "../Models/customer/pet.js";
 import { uploadfile } from "../Utils/s3Bucket.js";
+import { updateBusinessProfile } from "./Business.js";
+import { updateCount } from "./count.js";
 
 export const createPetProfile = async (req, res) => {
   const customerId = req.user.id;
@@ -34,6 +36,7 @@ export const createPetProfile = async (req, res) => {
     await pet.save();
     const petDetails = await Pet.findById(pet.id);
     console.log(petDetails);
+    updateCount("pets");
     return res.json({
       success: true,
       msg: "Pet Details Created Successfully",

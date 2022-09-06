@@ -4,6 +4,7 @@ import { generateToken } from "../Utils/jwtToken.js";
 import Customer from "../Models/customer/account.js";
 import { generateOTP } from "../Utils/sendOtp.js";
 import Appointment from "../Models/customer/appointment.js";
+import { updateCount } from "./count.js";
 
 export const customerRegisterWithOtp = async (req, res) => {
   const to = req.params.number;
@@ -58,6 +59,7 @@ export const customerRegister = async (req, res) => {
     const tok = { id: customer._id };
     const token = await generateToken(tok);
     let customerDetails = await Customer.findById(customer._id);
+    await updateCount("users");
     return res.json({
       success: true,
       msg: "Registered Successfully",
