@@ -27,22 +27,43 @@ export const updateCount = async (c) => {
     if (c === "PetClinic") {
       let petClinics = count.petClinics + 1;
       let serviceProviders = count.serviceProviders + 1;
-      await Count.findByIdAndUpdate(
-        { _id: id },
-        { petClinics, serviceProviders }
-      );
+      const both = {
+        petClinics,
+        serviceProviders,
+      };
+      await Count.findByIdAndUpdate({ _id: id }, { $set: both });
     } else if (c === "PetBoarding") {
       let petBoardings = count.petBoardings + 1;
-      await Count.findByIdAndUpdate({ _id: id }, { petBoardings });
+      let serviceProviders = count.serviceProviders + 1;
+      const both = {
+        petBoardings,
+        serviceProviders,
+      };
+      await Count.findByIdAndUpdate({ _id: id }, { $set: both });
     } else if (c === "PetGrooming") {
       let petGroomings = count.petGroomings + 1;
-      await Count.findByIdAndUpdate({ _id: id }, { petGroomings });
+      let serviceProviders = count.serviceProviders + 1;
+      const both = {
+        petGroomings,
+        serviceProviders,
+      };
+      await Count.findByIdAndUpdate({ _id: id }, { $set: both });
     } else if (c === "PetTraining") {
       let petTrainings = count.petTrainings + 1;
-      await Count.findByIdAndUpdate({ _id: id }, { petTrainings });
+      let serviceProviders = count.serviceProviders + 1;
+      const both = {
+        petTrainings,
+        serviceProviders,
+      };
+      await Count.findByIdAndUpdate({ _id: id }, { $set: both });
     } else if (c === "PetFood") {
       let petFoods = count.petFood + 1;
-      await Count.findByIdAndUpdate({ _id: id }, { petFoods });
+      let serviceProviders = count.serviceProviders + 1;
+      const both = {
+        petFoods,
+        serviceProviders,
+      };
+      await Count.findByIdAndUpdate({ _id: id }, { $set: both });
     } else if (c === "users") {
       let users = count.users + 1;
       await Count.findByIdAndUpdate({ _id: id }, { users });
