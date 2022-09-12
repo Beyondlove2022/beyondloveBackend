@@ -80,3 +80,18 @@ export const updateCount = async (c) => {
     return res.json({ success: false, msg: "Something Went Wrong" });
   }
 };
+
+export const getCount = async (req, res) => {
+  const id = "6315cf26df9d25531c2828b1";
+  try {
+    const count = await Count.findById(id);
+    return res.json({
+      success: true,
+      msg: "All count details sended successfully",
+      counts: count,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "Something Went Wrong", error });
+  }
+};
