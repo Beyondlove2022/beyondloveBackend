@@ -1,9 +1,12 @@
 import express from "express";
 import {
   adminLogin,
+  blockOrUnblockBusiness,
   createAdmin,
+  editBussinessAccount,
   getAllCustomers,
   getUniqueCustomer,
+  verifyBusiness,
 } from "../Controllers/Admin.js";
 import { adminAuthentication } from "../Middleware/authentication.js";
 
@@ -21,5 +24,17 @@ route.get(
   adminAuthentication,
   getUniqueCustomer
 );
+route.put(
+  "/admin/update-business/:token",
+  adminAuthentication,
+  editBussinessAccount
+);
+route.put(
+  "/admin/block-unblock/business/:token",
+  adminAuthentication,
+  blockOrUnblockBusiness
+);
+
+route.put("/admin/verify/business/:token", adminAuthentication, verifyBusiness);
 
 export default route;

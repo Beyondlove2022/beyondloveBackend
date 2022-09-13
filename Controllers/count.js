@@ -21,7 +21,7 @@ import Count from "../Models/count.js";
 // };
 
 export const updateCount = async (c) => {
-  const id = "6315cf26df9d25531c2828b1";
+  const id = "631f283235d4784e97143152";
   try {
     const count = await Count.findById(id);
     if (c === "PetClinic") {
@@ -82,7 +82,7 @@ export const updateCount = async (c) => {
 };
 
 export const getCount = async (req, res) => {
-  const id = "6315cf26df9d25531c2828b1";
+  const id = "631f278e5a9f7b8e37d13a52";
   try {
     const count = await Count.findById(id);
     return res.json({

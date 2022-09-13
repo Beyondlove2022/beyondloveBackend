@@ -1,6 +1,12 @@
 import bcrypt from "bcryptjs";
 import Admin from "../Models/Admin.js";
+import Count from "../Models/count.js";
 import Customer from "../Models/customer/account.js";
+import PetBoarding from "../Models/petBoarding.js";
+import PetClinic from "../Models/petClinic.js";
+import PetFood from "../Models/petFood.js";
+import PetGrooming from "../Models/petGrooming.js";
+import PetTraining from "../Models/petTraining.js";
 import { generateToken } from "../Utils/jwtToken.js";
 
 export const createAdmin = async (req, res) => {
@@ -77,6 +83,142 @@ export const getUniqueCustomer = async (req, res) => {
     });
   } catch (error) {
     console.log(error, "error");
+    return res.json({ success: false, msg: "Something Went Wrong", error });
+  }
+};
+
+export const editBussinessAccount = async (req, res) => {
+  const { category, businessId } = req.body;
+  let categoryName;
+  try {
+    if (category == "PetClinic") {
+      categoryName = PetClinic;
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const business = await categoryName.findById(businessId);
+    if (!business)
+      return res.json({ success: false, msg: "Profile Not Found" });
+    await categoryName.findByIdAndUpdate(
+      { _id: businessId },
+      { $set: req.body }
+    );
+    const businessDetails = await categoryName.findById(businessId);
+    return res.json({
+      success: true,
+      business: businessDetails,
+      msg: "Profile Updated",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "something went wrong" });
+  }
+};
+
+export const blockOrUnblockBusiness = async (req, res) => {
+  const { businessId, category } = req.body;
+  let categoryName;
+  try {
+    if (category == "PetClinic") {
+      categoryName = PetClinic;
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const business = await categoryName.findById(businessId);
+    if (!business)
+      return res.json({ success: false, msg: "Profile Not Found" });
+    await categoryName.findByIdAndUpdate(
+      { _id: businessId },
+      { block: !business.block }
+    );
+    const businessDetails = await categoryName.findById(businessId);
+    return res.json({
+      success: true,
+      business: businessDetails,
+      msg: "Profile Updated",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "Something Went Wrong", error });
+  }
+};
+
+export const verifyBusiness = async (req, res) => {
+  const { businessId, category } = req.body;
+  const countId = "631f283235d4784e97143152";
+  let categoryName;
+  try {
+    let count = await Count.findById(countId);
+    let verifiedServiceProviders = count.verifiedServiceProviders + 1;
+    if (category == "PetClinic") {
+      categoryName = PetClinic;
+      let verifiedClinics = count.verifiedClinics + 1;
+      await Count.findByIdAndUpdate(
+        { _id: countId },
+        { verifiedServiceProviders, verifiedClinics }
+      );
+    } else if (category == "PetBoarding") {
+      categoryName = PetBoarding;
+      let verifiedBoardings = count.verifiedBoardings + 1;
+      await Count.findByIdAndUpdate(
+        { _id: countId },
+        { verifiedServiceProviders, verifiedBoardings }
+      );
+    } else if (category == "PetGrooming") {
+      categoryName = PetGrooming;
+      let verifiedGroomings = count.verifiedGroomings + 1;
+      await Count.findByIdAndUpdate(
+        { _id: countId },
+        { verifiedServiceProviders, verifiedGroomings }
+      );
+    } else if (category == "PetTraining") {
+      categoryName = PetTraining;
+      let verifiedTrainings = count.verifiedTrainings + 1;
+      await Count.findByIdAndUpdate(
+        { _id: countId },
+        { verifiedServiceProviders, verifiedTrainings }
+      );
+    } else if (category == "PetFood") {
+      categoryName = PetFood;
+      let verifiedFoods = count.verifiedFoods + 1;
+      await Count.findByIdAndUpdate(
+        { _id: countId },
+        { verifiedServiceProviders, verifiedFoods }
+      );
+    } else {
+      return res.json({ success: false, msg: "This category not available" });
+    }
+    const business = await categoryName.findById(businessId);
+    if (!business)
+      return res.json({ success: false, msg: "Profile Not Found" });
+    await categoryName.findByIdAndUpdate(
+      { _id: businessId },
+      { verified: true }
+    );
+    const businessDetails = await categoryName.findById(businessId);
+    return res.json({
+      success: true,
+      business: businessDetails,
+      msg: "Profile Updated",
+    });
+  } catch (error) {
+    console.log(error);
     return res.json({ success: false, msg: "Something Went Wrong", error });
   }
 };

@@ -29,6 +29,7 @@ const petClinicSchema = new Schema(
     instagramUrl: { type: String },
     twitterUrl: { type: String },
     pincode: { type: String },
+    block: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
