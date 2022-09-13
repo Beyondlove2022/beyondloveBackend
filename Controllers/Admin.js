@@ -126,7 +126,9 @@ export const editBussinessAccount = async (req, res) => {
 export const blockOrUnblockBusiness = async (req, res) => {
   const { businessId, category } = req.body;
   let categoryName;
+  const countId = process.env.COUNT_ID;
   try {
+    let count = await Count.findById(countId);
     if (category == "PetClinic") {
       categoryName = PetClinic;
     } else if (category == "PetBoarding") {
@@ -161,7 +163,7 @@ export const blockOrUnblockBusiness = async (req, res) => {
 
 export const verifyBusiness = async (req, res) => {
   const { businessId, category } = req.body;
-  const countId = "631f283235d4784e97143152";
+  const countId = process.env.COUNT_ID;
   let categoryName;
   try {
     let count = await Count.findById(countId);

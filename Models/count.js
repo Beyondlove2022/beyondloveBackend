@@ -43,24 +43,24 @@ const countSchema = mongoose.Schema({
   verifiedFoods: {
     type: Number,
   },
-  // blockedServiceProviders: {
-  //   type: Number,
-  // },
-  // blockedClinics: {
-  //   type: Number,
-  // },
-  // blockedBoardings: {
-  //   type: Number,
-  // },
-  // blockedGrooming: {
-  //   type: Number,
-  // },
-  // blockedTrainings: {
-  //   type: Number,
-  // },
-  // blockedFoods: {
-  //   type: Number,
-  // },
+  blockedServiceProviders: {
+    type: Number,
+  },
+  blockedClinics: {
+    type: Number,
+  },
+  blockedBoardings: {
+    type: Number,
+  },
+  blockedGrooming: {
+    type: Number,
+  },
+  blockedTrainings: {
+    type: Number,
+  },
+  blockedFoods: {
+    type: Number,
+  },
 });
 
 const Count = mongoose.model("count", countSchema);
