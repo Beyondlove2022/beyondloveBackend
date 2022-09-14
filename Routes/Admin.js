@@ -3,6 +3,8 @@ import {
   adminLogin,
   blockOrUnblockBusiness,
   createAdmin,
+  createBussinessAccount,
+  deleteBusinessAccount,
   editBussinessAccount,
   getAllCustomers,
   getUniqueCustomer,
@@ -24,10 +26,20 @@ route.get(
   adminAuthentication,
   getUniqueCustomer
 );
+route.post(
+  "/admin/create-business/:token",
+  adminAuthentication,
+  createBussinessAccount
+);
 route.put(
   "/admin/update-business/:token",
   adminAuthentication,
   editBussinessAccount
+);
+route.delete(
+  "/admin/delete-business/:token",
+  adminAuthentication,
+  deleteBusinessAccount
 );
 route.put(
   "/admin/block-unblock/business/:token",

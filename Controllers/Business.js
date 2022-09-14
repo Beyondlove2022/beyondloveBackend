@@ -255,6 +255,9 @@ export const getAllCategoryProfiles = async (req, res) => {
     petFood.map((food) => {
       profilesArray.push(food);
     });
+    if (profilesArray.length <= 0) {
+      return res.json({ success: false, msg: "No Profiles Found" });
+    }
     return res.json({ success: true, profilesArray });
   } catch (error) {
     return res.json({
