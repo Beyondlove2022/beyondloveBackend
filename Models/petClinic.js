@@ -8,7 +8,7 @@ const petClinicSchema = new Schema(
     userType: { type: String, default: "Business" },
     category: { type: String, default: "PetClinic" },
     email: { type: String },
-    mobile: { type: String },
+    mobile: { type: Number },
     password: { type: String },
     description: { type: String },
     location: { type: Array },

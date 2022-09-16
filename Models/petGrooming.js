@@ -8,7 +8,7 @@ const petGroomingSchema = new Schema(
     userType: { type: String, default: "Business" },
     category: { type: String, default: "PetGrooming" },
     email: { type: String },
-    mobile: { type: String },
+    mobile: { type: Number },
     password: { type: String },
     description: { type: String },
     location: { type: Array },
