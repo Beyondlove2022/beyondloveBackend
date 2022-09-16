@@ -1,6 +1,7 @@
 import express from "express";
 import {
   adminLogin,
+  blockedBusiness,
   blockOrUnblockBusiness,
   createAdmin,
   createBussinessAccount,
@@ -8,6 +9,7 @@ import {
   editBussinessAccount,
   getAllCustomers,
   getUniqueCustomer,
+  verifiedBusiness,
   verifyBusiness,
 } from "../Controllers/Admin.js";
 import { adminAuthentication } from "../Middleware/authentication.js";
@@ -37,7 +39,7 @@ route.put(
   editBussinessAccount
 );
 route.delete(
-  "/admin/delete-business/:token",
+  "/admin/delete-business/:category/:businessId/:token",
   adminAuthentication,
   deleteBusinessAccount
 );
@@ -46,7 +48,17 @@ route.put(
   adminAuthentication,
   blockOrUnblockBusiness
 );
-
 route.put("/admin/verify/business/:token", adminAuthentication, verifyBusiness);
+route.get(
+  "/admin/get-blocked-business/:pageNo/:token",
+  adminAuthentication,
+  blockedBusiness
+);
+
+route.get(
+  "/admin/get-verified-business/:pageNo/:token",
+  adminAuthentication,
+  verifiedBusiness
+);
 
 export default route;

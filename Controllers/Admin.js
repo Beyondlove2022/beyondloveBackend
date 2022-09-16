@@ -201,7 +201,7 @@ export const editBussinessAccount = async (req, res) => {
 };
 
 export const deleteBusinessAccount = async (req, res) => {
-  const { businessId, category } = req.body;
+  const { businessId, category } = req.params;
   let categoryName;
   try {
     if (category == "PetClinic") {
@@ -357,11 +357,116 @@ export const verifyBusiness = async (req, res) => {
   }
 };
 
-export const getStateProviderCount = async (req, res) => {
+export const blockedBusiness = async (req, res) => {
+  const { pageNo } = req.params;
+  let skipClinicAndBoarding = 0;
+  let skipGroomingAndTraining = 0;
+  for (var i = 1; i < pageNo; i++) {
+    skipClinicAndBoarding += 3;
+    skipGroomingAndTraining += 2;
+  }
+  let profilesArray = [];
   try {
-    const getStateCount = await PetClinic.find();
+    const petClinic = await PetClinic.find({ block: true })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    console.log({ petClinic });
+    petClinic.map((clinic) => {
+      profilesArray.push(clinic);
+    });
+
+    const petBoarding = await PetBoarding.find({ block: true })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petBoarding.map((boarding) => {
+      profilesArray.push(boarding);
+    });
+
+    const petGrooming = await PetGrooming.find({ block: true })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petGrooming.map((grooming) => {
+      profilesArray.push(grooming);
+    });
+
+    const petTraining = await PetTraining.find({ block: true })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petTraining.map((training) => {
+      profilesArray.push(training);
+    });
+
+    const petFood = await PetFood.find({ block: true });
+    petFood.map((food) => {
+      profilesArray.push(food);
+    });
+    if (profilesArray.length <= 0) {
+      return res.json({ success: false, msg: "No Profiles Found" });
+    }
+    return res.json({
+      success: true,
+      profilesArray,
+      count: profilesArray.length,
+    });
   } catch (error) {
     console.log(error);
-    return res.json({ success: false, msg: "Something Went Wrong" });
+    return res.json({ success: false, msg: "Something Went Wrong", error });
+  }
+};
+
+export const verifiedBusiness = async (req, res) => {
+  const { pageNo } = req.params;
+  let skipClinicAndBoarding = 0;
+  let skipGroomingAndTraining = 0;
+  for (var i = 1; i < pageNo; i++) {
+    skipClinicAndBoarding += 3;
+    skipGroomingAndTraining += 2;
+  }
+  let profilesArray = [];
+  try {
+    const petClinic = await PetClinic.find({ verified: true })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    console.log({ petClinic });
+    petClinic.map((clinic) => {
+      profilesArray.push(clinic);
+    });
+
+    const petBoarding = await PetBoarding.find({ verified: true })
+      .skip(skipClinicAndBoarding)
+      .limit(3);
+    petBoarding.map((boarding) => {
+      profilesArray.push(boarding);
+    });
+
+    const petGrooming = await PetGrooming.find({ verified: true })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petGrooming.map((grooming) => {
+      profilesArray.push(grooming);
+    });
+
+    const petTraining = await PetTraining.find({ verified: true })
+      .skip(skipGroomingAndTraining)
+      .limit(2);
+    petTraining.map((training) => {
+      profilesArray.push(training);
+    });
+
+    const petFood = await PetFood.find({ verified: true });
+    petFood.map((food) => {
+      profilesArray.push(food);
+    });
+    if (profilesArray.length <= 0) {
+      return res.json({ success: false, msg: "No Profiles Found" });
+    }
+    return res.json({
+      success: true,
+      profilesArray,
+      count: profilesArray.length,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "Something Went Wrong", error });
   }
 };

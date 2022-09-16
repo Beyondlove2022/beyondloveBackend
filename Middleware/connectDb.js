@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const connectdb = async () => {
   try {
-    await mongoose.connect(process.env.LIVE_DB_1, {
+    await mongoose.connect(process.env.LIVE_DB, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
