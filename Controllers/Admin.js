@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import Admin from "../Models/Admin.js";
 import Count from "../Models/count.js";
 import Customer from "../Models/customer/account.js";
+import Pet from "../Models/customer/pet.js";
 import PetBoarding from "../Models/petBoarding.js";
 import PetClinic from "../Models/petClinic.js";
 import PetFood from "../Models/petFood.js";
@@ -77,10 +78,12 @@ export const getUniqueCustomer = async (req, res) => {
     const findUniqueCustomer = await Customer.findById(userId);
     if (!findUniqueCustomer)
       return res.json({ success: false, msg: "This User Data Not Found" });
+    const pets = await Pet.find({ customerId: userId });
     return res.json({
       success: true,
       msg: "Unique User Data Sended Successfully",
       user: findUniqueCustomer,
+      pets,
     });
   } catch (error) {
     console.log(error, "error");
