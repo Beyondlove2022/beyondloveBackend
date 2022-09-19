@@ -24,7 +24,7 @@ route.get(
   getAllCustomers
 );
 route.get(
-  "/admin/get-uniquecustomer/:token",
+  "/admin/get-uniquecustomer/:userId/:token",
   adminAuthentication,
   getUniqueCustomer
 );

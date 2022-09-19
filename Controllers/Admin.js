@@ -72,7 +72,7 @@ export const getAllCustomers = async (req, res) => {
 };
 
 export const getUniqueCustomer = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
   try {
     const findUniqueCustomer = await Customer.findById(userId);
     if (!findUniqueCustomer)
