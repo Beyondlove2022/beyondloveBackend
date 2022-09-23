@@ -41,6 +41,7 @@ export const businessAuthentication = async (req, res, next) => {
         msg: "Account Not Found Please Register",
       });
     }
+    console.log("success");
     next();
   } catch (err) {
     return res.json({ success: false, msg: "Authentication Failed", err: err });

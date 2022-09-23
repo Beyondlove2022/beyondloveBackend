@@ -50,6 +50,17 @@ export const bookAppointment = async (req, res) => {
   }
 };
 
+export const getUniqueBusinessAppointment = async (req, res) => {
+  const businessId = req.user.id;
+  try {
+    const appointments = await Appointment.find({ businessId });
+    console.log(appointments);
+    return res.json({ succes: true, appointments, count: appointments.length });
+  } catch (error) {
+    return res.json({ succes: false, msg: "Something Went Wrong" });
+  }
+};
+
 export const getUniqueAppointment = async (req, res) => {
   // const id = req.admin.id
   const { appointmentId } = req.params;
