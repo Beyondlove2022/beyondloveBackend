@@ -473,3 +473,58 @@ export const verifiedBusiness = async (req, res) => {
     return res.json({ success: false, msg: "Something Went Wrong", error });
   }
 };
+
+// export const ads = async (req, res) => {
+//   const file = req.files;
+//   const { bannerType, category, folderName } = req.params;
+//   try {
+//     console.log(req.params, "cate");
+//     const result = await uploadfile(bannerType, bussinessId, folderName);
+//     console.log("result Start", result, "result");
+//     const image = result.Key;
+//     console.log("object");
+//     if (folderName === "profile") {
+//       console.log("working");
+//       await categoryName.findByIdAndUpdate(
+//         { _id: bussinessId },
+//         { profileImage: image }
+//       );
+//       const profileImg = await categoryName.findById(bussinessId);
+//       return res.json({
+//         success: true,
+//         msg: "Profile Photo Uploaded Successfully",
+//         bussinessProfileImage: profileImg,
+//       });
+//     } else if (folderName === "cover") {
+//       await categoryName.findByIdAndUpdate(
+//         { _id: bussinessId },
+//         { coverImage: image }
+//       );
+//       const bussiness = await categoryName.findById(bussinessId);
+//       return res.json({
+//         success: true,
+//         msg: "Cover Photo Uploaded Successfully",
+//         bussinessCoverImage: bussiness.coverImage,
+//       });
+//     } else if (folderName === "allphotos") {
+//       const business = await categoryName.findById(bussinessId);
+//       const businessImages = business.images;
+//       businessImages.push(image);
+//       await categoryName.findByIdAndUpdate(
+//         { _id: bussinessId },
+//         { images: businessImages }
+//       );
+//       // let img = await
+//       return res.json({
+//         success: true,
+//         msg: "Photos Uploaded Successfully",
+//         businessImages,
+//       });
+//     } else {
+//       return res.json({ success: false, msg: "This category not available" });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.json({ success: true, msg: "Something Went Wrong" });
+//   }
+// };

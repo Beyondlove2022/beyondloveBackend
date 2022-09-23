@@ -8,6 +8,7 @@ import Pet from "./Routes/Pet.js";
 import Count from "./Routes/Count.js";
 import ForgetAndReset from "./Routes/ForgetAndReset.js";
 import BusinessReview from "./Routes/BusinessReview.js";
+import Appointment from "./Routes/Appointment.js";
 
 import connectdb from "./Middleware/connectDb.js";
 
@@ -30,6 +31,7 @@ app.use("/api", Pet);
 app.use("/api", ForgetAndReset);
 app.use("/api", BusinessReview);
 app.use("/api", Count);
+app.use("/api", Appointment);
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}, on ${process.env.NODE_ENV} mode`);
