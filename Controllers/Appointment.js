@@ -92,6 +92,39 @@ export const getAllAppointments = async (req, res) => {
   }
 };
 
+export const reScheduleAppointment = async (req, res) => {
+  const { appointmentId } = req.params;
+  // const { date, time } = req.body;
+  const businessId = req.user.id;
+  try {
+    const appointment = await Appointment.findById(appointmentId);
+    if (!appointment) {
+      return res.json({ success: false, msg: "Appointment Not Found" });
+    }
+    console.log({ businessId });
+    console.log("appointment id", appointment.businessId);
+    const checkBusinessId = businessId == appointment.businessId;
+    if (!checkBusinessId)
+      return res.json({
+        success: false,
+        msg: "You can't able to reschedule this appointment",
+      });
+    await Appointment.findByIdAndUpdate(
+      { _id: appointmentId },
+      { $set: req.body }
+    );
+    const findAppointment = await Appointment.findById(appointmentId);
+    return res.json({
+      success: true,
+      msg: "Appointment Reschedule Successfully",
+      appointment: findAppointment,
+    });
+  } catch (error) {
+    console.log("error", error);
+    return res.json({ success: false, msg: "something went wrong", error });
+  }
+};
+
 export const fixAppointment = async (req, res) => {
   const { appointmentId, appointmentFixed } = req.params;
   try {
