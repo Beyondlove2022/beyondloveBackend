@@ -94,7 +94,6 @@ export const getAllAppointments = async (req, res) => {
 
 export const reScheduleAppointment = async (req, res) => {
   const { appointmentId } = req.params;
-  // const { date, time } = req.body;
   const businessId = req.user.id;
   try {
     const appointment = await Appointment.findById(appointmentId);

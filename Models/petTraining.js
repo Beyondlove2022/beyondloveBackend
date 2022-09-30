@@ -31,6 +31,8 @@ const petTrainingSchema = new Schema(
     twitterUrl: { type: String },
     pincode: { type: String },
     block: { type: Boolean, default: false },
+    bookingPerSlot: { type: Number },
+    timeSlots: { type: Array },
   },
   { timestamps: true }
 );

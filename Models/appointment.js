@@ -17,7 +17,7 @@ const appointmentSchema = mongoose.Schema(
     date: {
       type: String,
     },
-    time: {
+    timeSlot: {
       type: String,
     },
 
