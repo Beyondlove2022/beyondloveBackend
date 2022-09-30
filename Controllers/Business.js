@@ -209,10 +209,35 @@ export const getBusinessProfile = async (req, res, next) => {
       return res.json({ success: false, msg: "Profile not found" });
     }
     const businessAppointments = await Appointment.find({ businessId: id });
-    // const
-    console.log({ businessAppointments });
-    return res.json({ success: true, business });
+    const fromPresentToPastAppointments = [];
+    // console.log(businessAppointments);
+    businessAppointments.map((appointment) => {
+      // let appointmentDate = appointment.date;
+      let newDate = new Date();
+
+      const appointmentStringDate = appointment.date.split("-").join("");
+      const newStringDate = newDate.toISOString();
+      const currentDateStringArray = newStringDate
+        .split("-")
+        .join("")
+        .split("T");
+      const currentDate = Number(currentDateStringArray[0]);
+      const appointmentDate = Number(appointmentStringDate);
+      console.log(typeof currentDate, currentDate);
+      console.log(typeof appointmentDate, appointmentDate);
+      if (currentDate <= appointmentDate) {
+        console.log("running");
+        fromPresentToPastAppointments.push(appointment);
+      }
+    });
+    return res.json({
+      success: true,
+      appointmentsCount: fromPresentToPastAppointments.length,
+      business,
+      fromPresentToPastAppointments,
+    });
   } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
       msg: "something went wrong",
