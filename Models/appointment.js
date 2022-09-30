@@ -18,7 +18,7 @@ const appointmentSchema = mongoose.Schema(
       type: String,
     },
     timeSlot: {
-      type: String,
+      type: Array,
     },
 
     // Customer Details
