@@ -8,6 +8,7 @@ import { generateToken } from "../Utils/jwtToken.js";
 import { downloadFile, uploadfile } from "../Utils/s3Bucket.js";
 import { generateOTP } from "../Utils/sendOtp.js";
 import { updateCount } from "./count.js";
+import Appointment from "../Models/appointment.js";
 
 export const registerWithOtp = async (req, res) => {
   const to = req.params.number;
@@ -207,6 +208,9 @@ export const getBusinessProfile = async (req, res, next) => {
     if (!business) {
       return res.json({ success: false, msg: "Profile not found" });
     }
+    const businessAppointments = await Appointment.find({ businessId: id });
+    // const
+    console.log({ businessAppointments });
     return res.json({ success: true, business });
   } catch (error) {
     return res.json({

@@ -32,6 +32,7 @@ const petBoardingSchema = new Schema(
     block: { type: Boolean, default: false },
     bookingPerSlot: { type: Number },
     timeSlots: { type: Array },
+    packages: { type: Array },
   },
   { timestamps: true }
 );
