@@ -1,6 +1,7 @@
 import express from "express";
 import {
   bookAppointment,
+  fixAppointment,
   getUniqueBusinessAppointment,
   reScheduleAppointment,
 } from "../Controllers/Appointment.js";
@@ -18,6 +19,11 @@ route.put(
   "/business/reschedule-appointment/:category/:appointmentId/:token",
   businessAuthentication,
   reScheduleAppointment
+);
+route.put(
+  "/business/fix-appointemnt/:appointmentId/:token",
+  businessAuthentication,
+  fixAppointment
 );
 
 export default route;
